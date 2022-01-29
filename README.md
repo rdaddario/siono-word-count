@@ -1,6 +1,6 @@
 # word-count
 
-> An awesome project based on Ts.ED framework
+> Word count processor
 
 See [Ts.ED](https://tsed.io) project for more information.
 
@@ -19,3 +19,6 @@ $ npm run start
 $ npm run build
 $ npm run start:prod
 ```
+##Notes
+
+In the case of multiple words with the same count above the N limit, the API will discard the occurrences past that number.
