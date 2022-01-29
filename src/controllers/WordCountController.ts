@@ -1,30 +1,14 @@
-import {Controller, Inject} from "@tsed/di";
-import {Get, Post} from "@tsed/schema";
-import {Frequency} from "../models/Frequency";
+import {Controller} from "@tsed/di";
+import {Post} from "@tsed/schema";
 import {PostRequest} from "../models/PostRequest";
-import {Req, Use} from "@tsed/common";
-import {fileUploadMiddleware} from "../middlewares/FileUploadMiddleware";
-import {WordProcessorFactory} from "../services/WordProcessorFactory";
+import {Req, UseBefore} from "@tsed/common";
+import {FileUploadMiddleware} from "../middlewares/FileUploadMiddleware";
 
 @Controller("/wordcount")
 export class WorldCountController {
-  @Inject()
-  private wordProcessorFactory: WordProcessorFactory;
-
-  @Get("/")
-  get() {
-    const frequencies = [new Frequency({word: "first", count: 8})];
-
-    return frequencies;
-  }
-
   @Post("/")
-  @Use(fileUploadMiddleware)
+  @UseBefore(FileUploadMiddleware)
   count(@Req() request: PostRequest) {
-    const wordProcessor = this.wordProcessorFactory.createInstance();
-    wordProcessor.process(request.file.buffer);
-    wordProcessor.flush();
-
-    return wordProcessor.getTopNCount(3);
+    return request.file.wordProcessor.getTopNCount(3);
   }
 }
