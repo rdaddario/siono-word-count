@@ -9,16 +9,13 @@ import cors from "cors";
 import "@tsed/ajv";
 import {config, rootDir} from "./config";
 
-
 @Configuration({
   ...config,
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [
-      `${rootDir}/controllers/**/*.ts`
-    ]
+    "/rest": [`${rootDir}/controllers/**/*.ts`]
   },
   views: {
     root: `${rootDir}/views`,
@@ -26,9 +23,7 @@ import {config, rootDir} from "./config";
       ejs: "ejs"
     }
   },
-  exclude: [
-    "**/*.spec.ts"
-  ]
+  exclude: ["**/*.spec.ts"]
 })
 export class Server {
   @Inject()
@@ -44,8 +39,10 @@ export class Server {
       .use(compress({}))
       .use(methodOverride())
       .use(bodyParser.json())
-      .use(bodyParser.urlencoded({
-        extended: true
-      }));
+      .use(
+        bodyParser.urlencoded({
+          extended: true
+        })
+      );
   }
 }

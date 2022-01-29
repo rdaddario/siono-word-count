@@ -6,6 +6,6 @@ export const rootDir = join(__dirname, "..");
 export const config: Partial<TsED.Configuration> = {
   version,
   rootDir,
-  logger: loggerConfig,
+  logger: loggerConfig
   // additional shared configuration
 };
