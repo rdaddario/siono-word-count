@@ -29,7 +29,37 @@ describe("Server", () => {
 
       const response = await request.post("/rest/wordcount").attach("inputfile", smallSampleFilePath).expect(200);
 
-      expect(response.text).toContain("Lorem ipsum...");
+      const frequencies = JSON.parse(response.text);
+      expect(frequencies).toHaveLength(2);
+
+      let {count, word} = frequencies[0];
+      expect(count).toEqual(1);
+      expect(word).toEqual("Lorem");
+
+      ({count, word} = frequencies[1]);
+      expect(count).toEqual(1);
+      expect(word).toEqual("ipsum");
+    });
+
+    it("Should return frequencies for medium sized file", async () => {
+      const mediumSampleFilePath = "src/tests/fixtures/medium.txt";
+
+      const response = await request.post("/rest/wordcount").attach("inputfile", mediumSampleFilePath).expect(200);
+
+      const frequencies = JSON.parse(response.text);
+      expect(frequencies).toHaveLength(3);
+
+      let {count, word} = frequencies[0];
+      expect(count).toEqual(15);
+      expect(word).toEqual("Lorem");
+
+      ({count, word} = frequencies[1]);
+      expect(count).toEqual(15);
+      expect(word).toEqual("ipsum");
+
+      ({count, word} = frequencies[2]);
+      expect(count).toEqual(15);
+      expect(word).toEqual("dolor");
     });
   });
 });

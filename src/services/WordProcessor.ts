@@ -55,6 +55,12 @@ export class WordProcessor {
     }
   }
 
+  public close() {
+    this.btree.clear();
+    this.dictionary.clear();
+    this.currentWord = this.EMPTY;
+  }
+
   public getWords() {
     return this.dictionary;
   }
@@ -77,11 +83,13 @@ export class WordProcessor {
   }
 
   private addWord(word: string): void {
-    const currentWordCount = this.dictionary.get(word) || 0;
-    this.dictionary.set(word, currentWordCount + 1);
+    if (word) {
+      const currentWordCount = this.dictionary.get(word) || 0;
+      this.dictionary.set(word, currentWordCount + 1);
 
-    this.removeFromNode(word, currentWordCount);
-    this.addToNode(word, currentWordCount + 1);
+      this.removeFromNode(word, currentWordCount);
+      this.addToNode(word, currentWordCount + 1);
+    }
   }
 
   private addToNode(word: string, wordCount: number) {

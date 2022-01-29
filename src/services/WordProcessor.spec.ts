@@ -96,5 +96,11 @@ describe("WordProcessor", () => {
     expect(frequencies[0].count).toEqual(3);
     expect(frequencies[1].count).toEqual(2);
     expect(frequencies[2].count).toEqual(1);
+
+    frequencies = wordProcessor.getTopNCount(4);
+    expect(frequencies).toHaveLength(3);
+    expect(frequencies[0].count).toEqual(3);
+    expect(frequencies[1].count).toEqual(2);
+    expect(frequencies[2].count).toEqual(1);
   });
 });
