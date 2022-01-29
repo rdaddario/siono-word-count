@@ -27,7 +27,7 @@ describe("Server", () => {
     it("Should return the number of words", async () => {
       const smallSampleFilePath = "src/tests/fixtures/small.txt";
 
-      const response = await request.post("/rest/wordcount").attach("inputfile", smallSampleFilePath).expect(200);
+      const response = await request.post("/rest/wordcount/2").attach("inputfile", smallSampleFilePath).expect(200);
 
       const frequencies = JSON.parse(response.text);
       expect(frequencies).toHaveLength(2);
@@ -44,7 +44,7 @@ describe("Server", () => {
     it("Should return frequencies for medium sized file", async () => {
       const mediumSampleFilePath = "src/tests/fixtures/medium.txt";
 
-      const response = await request.post("/rest/wordcount").attach("inputfile", mediumSampleFilePath).expect(200);
+      const response = await request.post("/rest/wordcount/3").attach("inputfile", mediumSampleFilePath).expect(200);
 
       const frequencies = JSON.parse(response.text);
       expect(frequencies).toHaveLength(3);
