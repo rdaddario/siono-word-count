@@ -32,5 +32,8 @@ The top N occurrences are then obtained by level traversing the tree up until th
 
 ## Notes
 
+The word processor uses the blank space to decide a new word has arrived and to update the dictionary. 
+There is logic to support words that are split in two consecutive chunks and to support line endings.
+
 In the case of multiple words with the same count above the N limit, the API will discard the occurrences past that
 number.
