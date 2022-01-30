@@ -69,20 +69,28 @@ export class WordProcessor {
     return this.dictionary;
   }
 
+  // private descendingOrderTraverse(node: TreeItem, limit: number) {
+  //    if(node){
+  //      descendingOrderTraverse();
+  //     printf(" %d ", n->number);
+  //     printInOrder(n->left);
+  //   }
+  // }
+
   public getTopNCount(n: number) {
     const result: Frequency[] = [];
 
-    this.btree.levelTraversal((item) => {
-      item.values.forEach((word) => {
-        if (result.length < n) {
-          result.push(new Frequency({word, count: item.count}));
-        }
-      });
+    // TODO: Do a reverse order traversal here; This library does not support it directly.
+    const orderedTree = this.btree.toArray();
 
-      if (result.length === n) {
-        return false;
+    while (result.length < n) {
+      const item = orderedTree.pop();
+      if (item) {
+        for (let i = 0; i < item.values.length && result.length < n; i++) {
+          result.push(new Frequency({word: item.values[i], count: item.count}));
+        }
       }
-    });
+    }
 
     return result;
   }
