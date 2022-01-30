@@ -28,7 +28,7 @@ files in disc or consuming very large amount of memory.
 The word processor updates a dictionary with every word and its number of occurrences for every chunk that is processed.
 When the upload stream is complete, the dictionary is sorted using a binary tree.
 
-The top N occurrences are then obtained by level traversing the tree up until the specified limit.
+The top N occurrences are then obtained by reverse order traversing the tree up until the specified limit.
 
 ## Notes
 
