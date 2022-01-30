@@ -14,6 +14,6 @@ export class WorldCountController {
       throw new BadRequest("File is missing. Post the file as form data with name 'inputfile'");
     }
 
-    return request.file.wordProcessor.getTopNCount(top);
+    return request.file.wordProcessor.getTopNCount(Number(top));
   }
 }

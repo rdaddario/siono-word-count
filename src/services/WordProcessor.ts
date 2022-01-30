@@ -25,7 +25,7 @@ export class WordProcessor {
   public isEOL = false;
   private dictionary: Map<string, number> = new Map<string, number>();
   private btree: Collections.BSTree<TreeItem> = new Collections.BSTree<TreeItem>((a, b) => {
-    return b.count - a.count;
+    return a.count - b.count;
   });
   private EOL = "\n".charCodeAt(0);
   private EMPTY = "";
@@ -53,6 +53,10 @@ export class WordProcessor {
       this.addWord(this.currentWord);
       this.currentWord = this.EMPTY;
     }
+
+    this.dictionary.forEach((value, key) => {
+      this.addToNode(key, value);
+    });
   }
 
   public close() {
@@ -67,7 +71,8 @@ export class WordProcessor {
 
   public getTopNCount(n: number) {
     const result: Frequency[] = [];
-    this.btree.inorderTraversal((item) => {
+
+    this.btree.levelTraversal((item) => {
       item.values.forEach((word) => {
         if (result.length < n) {
           result.push(new Frequency({word, count: item.count}));
@@ -86,9 +91,6 @@ export class WordProcessor {
     if (word) {
       const currentWordCount = this.dictionary.get(word) || 0;
       this.dictionary.set(word, currentWordCount + 1);
-
-      this.removeFromNode(word, currentWordCount);
-      this.addToNode(word, currentWordCount + 1);
     }
   }
 
