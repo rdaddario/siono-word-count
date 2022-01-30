@@ -1,6 +1,7 @@
 import {Injectable} from "@tsed/di";
 import * as Collections from "typescript-collections";
 import {Frequency} from "../models/Frequency";
+import {$log} from "@tsed/logger";
 
 class TreeItem {
   count: number;
@@ -33,6 +34,8 @@ export class WordProcessor {
   private currentWord = "";
 
   public process(bytes: Uint8Array): void {
+    $log.info(`Processing ${bytes.length} bytes...`);
+
     bytes.forEach((charCode) => {
       this.isEOL = charCode === this.EOL;
 
@@ -57,6 +60,8 @@ export class WordProcessor {
     this.dictionary.forEach((value, key) => {
       this.addToNode(key, value);
     });
+
+    $log.info(`Process complete!`);
   }
 
   public close() {
@@ -69,21 +74,13 @@ export class WordProcessor {
     return this.dictionary;
   }
 
-  // private descendingOrderTraverse(node: TreeItem, limit: number) {
-  //    if(node){
-  //      descendingOrderTraverse();
-  //     printf(" %d ", n->number);
-  //     printInOrder(n->left);
-  //   }
-  // }
-
   public getTopNCount(n: number) {
     const result: Frequency[] = [];
 
-    // TODO: Do a reverse order traversal here; This library does not support it directly.
+    // TODO: Do a reverse order traversal here; This library does not support it directly. Cannot access nodes directly for recursion.
     const orderedTree = this.btree.toArray();
 
-    while (result.length < n) {
+    while (result.length < n && orderedTree.length) {
       const item = orderedTree.pop();
       if (item) {
         for (let i = 0; i < item.values.length && result.length < n; i++) {

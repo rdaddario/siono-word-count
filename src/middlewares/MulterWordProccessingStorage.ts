@@ -3,6 +3,7 @@ import {WordProcessorFactory} from "../services/WordProcessorFactory";
 import concat from "concat-stream";
 import multer from "multer";
 import {ExtendedFile} from "./ExtendedFile";
+import {$log} from "@tsed/logger";
 
 @Injectable()
 export class MulterWordProcessingStorage implements multer.StorageEngine {
@@ -10,13 +11,12 @@ export class MulterWordProcessingStorage implements multer.StorageEngine {
   private wordProcessorFactory: WordProcessorFactory;
 
   public _handleFile(req: Express.Request, file: ExtendedFile, callback: (error?: any, info?: Partial<ExtendedFile>) => void): void {
+    $log.info(`Processing file ${file.originalname}`);
     const wordProcessor = this.wordProcessorFactory.createInstance();
-    console.log(`Processing file ${file.originalname}`);
 
     file.stream.pipe(
       concat((data: any) => {
-        console.log(`Chunk size: ${data.length}`);
-        console.log(`Current word count: ${wordProcessor.getWords().size}`);
+        $log.info(`Chunk size: ${data.length}`);
         wordProcessor.process(data);
 
         callback(null, {

@@ -1,5 +1,5 @@
 import {PlatformTest} from "@tsed/common";
-import {WordProcessor} from "./WordProcessor";
+import {WordProcessor} from "../../services/WordProcessor";
 
 describe("WordProcessor", () => {
   beforeEach(PlatformTest.create);

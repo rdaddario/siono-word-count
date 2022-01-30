@@ -51,5 +51,3 @@ To post a file using CURL
 ```batch
 $ curl -i -X POST -H "Content-Type: multipart/form-data" -F "inputfile=@/home/yur/path/to/file.txt" http://localhost:8083/rest/wordcount/3
 ```
-
-

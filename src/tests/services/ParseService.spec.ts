@@ -1,5 +1,5 @@
 import {PlatformTest} from "@tsed/common";
-import {ParseService} from "./ParseService";
+import {ParseService} from "../../services/ParseService";
 
 describe("ParseService", () => {
   beforeEach(PlatformTest.create);
