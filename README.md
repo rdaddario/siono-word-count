@@ -37,3 +37,19 @@ There is logic to support words that are split in two consecutive chunks and to 
 
 In the case of multiple words with the same count above the N limit, the API will discard the occurrences past that
 number.
+
+## How to use
+
+You can run the integration test with the provided sample files or you can start the server and post your own files.
+
+To start the server:
+```batch
+$ npm run start
+```
+
+To post a file using CURL
+```batch
+$ curl -i -X POST -H "Content-Type: multipart/form-data" -F "inputfile=@/home/yur/path/to/file.txt" http://localhost:8083/rest/wordcount/3
+```
+
+
